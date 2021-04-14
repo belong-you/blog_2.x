@@ -1,24 +1,14 @@
 import { apiGetNoteLabel, apiGetNoteFile } from '@/axios/note';
 import NoteLabel from '@/Components/NoteLabel';
 import NoteFileList from '@/Components/NoteFileList';
+import Markdown from '@/Components/Markdown';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
-import MarkdownIt from 'markdown-it';
-import './markdown.scss';
-import hljs from 'highlight.js';
 import 'highlight.js/scss/github.scss';
 import style from './type.scss';
-import { useEffect } from 'react';
-const md = MarkdownIt();
 const { [ 'log' ] : c } = console;
 
 const NotePage = ({ label, text, fileList }: any) => {
-  const html = text ? md.render(text) : 'loading...';
-  useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block: any) => {
-      hljs.highlightBlock(block);
-    });
-  });
   return (<div>
     <div className={[style.note_list, 'fl'].join(' ')} >
       <NoteLabel list={label} />
@@ -26,9 +16,9 @@ const NotePage = ({ label, text, fileList }: any) => {
     <div className={[style.file_list, 'fl'].join(' ')} >
       <NoteFileList list={fileList} />
     </div>
-    <div className={[style.content, 'article-main', 'fl'].join(' ')} 
-      dangerouslySetInnerHTML={{ __html: html }}
-    ></div>
+    <div className={[style.content, 'fl'].join(' ')} >
+      <Markdown text={text} />
+    </div>
   </div>);
 }
 
