@@ -1,35 +1,62 @@
 import { apiGetNoteLabel, apiGetNoteFile } from '@/axios/note';
-import NoteLabel from '@/Components/NoteLabel';
-import NoteFileList from '@/Components/NoteFileList';
+import NoteLabel from '@/Components/note/NoteLabel';
+import NoteFileList from '@/Components/note/NoteFileList';
 import Markdown from '@/Components/Markdown';
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt();
+import LinksList from '@/Components/LinksList';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
 import 'highlight.js/scss/github.scss';
 import style from './type.scss';
+import { IRouteProps } from 'umi';
+import { createNum } from '@/utils/number';
+const iter = createNum()
 const { [ 'log' ] : c } = console;
 
-const NotePage = ({ label, text, fileList }: any) => {
-  return (<div>
-    <div className={[style.note_list, 'fl'].join(' ')} >
+const NotePage = ({ label, text, fileList }: IRouteProps) => {
+
+  const html = text ? md.render(text) : 'loading...';
+
+  let newHTML = '';
+  const reg = /^\<h\d/g;
+  html.split(/\n/).forEach((val: string) => {
+    // h 标签添加 id
+    if (reg.test(val)) {
+      const str = val.slice(0, 3);
+      val = val.replace(reg, `${str} id='${iter.next().value}'`);
+    }
+    /\>$/.test(val) ? newHTML += val : newHTML += val + '\n';
+  })
+
+  return (<div className={style.note_container}>
+    <div className={[style.folder_list].join(' ')} >
       <NoteLabel list={label} />
     </div>
-    <div className={[style.file_list, 'fl'].join(' ')} >
-      <NoteFileList list={fileList} />
+    
+    <div className={['leayer', style.wrapper].join(' ')}>
+      <div className={[style.file_list].join(' ')} >
+        <NoteFileList list={fileList} />
+      </div>
+      <div className={[style.content].join(' ')} >
+        <Markdown html={newHTML} />
+      </div>
     </div>
-    <div className={[style.content, 'fl'].join(' ')} >
-      <Markdown text={text} />
+
+    <div className={style.links_list}>
+      <LinksList html={newHTML} />
     </div>
   </div>);
 }
 
-NotePage.getInitialProps = async ({ history }: any) => {
+NotePage.getInitialProps = async ({ history }: IRouteProps) => {
   const pathArr = pathNameSplit(history.location.pathname.split('/note/')[1]);
 
   const label: any = await apiGetNoteLabel();
   const arr = getAssignData(label.data, pathArr);  // 递归数组过滤
   const fileList = getLastFileList(arr);  // 数组最后的文件列表
   const url = getFilenameUrl(arr, pathArr);  // 指定文件路径
-  const file: any = await apiGetNoteFile(escape(url));  
+  const file: any = await apiGetNoteFile(escape(url));
 
   let text: string = '';
   if (file.code == 200) text = file.data;

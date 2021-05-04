@@ -1,0 +1,10 @@
+.links_list{
+  font-size: 14px;
+  li{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    line-height: 2;
+  }
+}
