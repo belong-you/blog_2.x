@@ -6,7 +6,7 @@ const { ['log'] : c } = console;
  * @returns 
  */
 export const pathNameSplit = (src: string) => {
-  const arr = src.split(/\//);
+  const arr = src?.split(/\//);
   return arr;
 }
 

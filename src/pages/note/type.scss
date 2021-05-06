@@ -1,4 +1,5 @@
 .note_container{
+  min-height: calc(100vh - 160px);
   li > a{
     display: inline-block;
     width: 100%;
@@ -40,7 +41,8 @@
     width: 100%;
   }
   .file_list{
-    max-width: 174px;
+    width: 174px;
+    max-height: calc(100vh - 120px);
   }
 
   .links_list{
@@ -61,7 +63,7 @@
   }
   
 }
-.file_list, .folder_list{
+.folder_list{
   li{
     padding-left: 10px;
     line-height: 1.8;

@@ -7,11 +7,10 @@ const md = MarkdownIt();
 import LinksList from '@/Components/LinksList';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
-import 'highlight.js/scss/github.scss';
 import style from './type.scss';
 import { IRouteProps } from 'umi';
 import { createNum } from '@/utils/number';
-const iter = createNum()
+const iter = createNum();
 const { [ 'log' ] : c } = console;
 
 const NotePage = ({ label, text, fileList }: IRouteProps) => {
@@ -23,8 +22,8 @@ const NotePage = ({ label, text, fileList }: IRouteProps) => {
   html.split(/\n/).forEach((val: string) => {
     // h 标签添加 id
     if (reg.test(val)) {
-      const str = val.slice(0, 3);
-      val = val.replace(reg, `${str} id='${iter.next().value}'`);
+      const strStart = val.slice(0, 3);
+      val = val.replace(reg, `${strStart} id='${iter.next().value}'`);
     }
     /\>$/.test(val) ? newHTML += val : newHTML += val + '\n';
   })
@@ -77,7 +76,8 @@ export default NotePage;
  * @param arr 
  * @returns 
  */
-function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): string {
+function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): string{
+  if (!arr || !pathArr) return 'undefined';
   const value = arr[0];
   const str = pathArr[pathArr.length - 1] + ' ';
   if (typeof value === 'object') {
@@ -101,6 +101,7 @@ function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): strin
  * @returns 
  */
  function getLastFileList (arr: any[], fileList: string[] = []): any {
+  if (arr.length === 0) return;
   if (typeof arr[0] === 'string') return fileList = arr;
   return getLastFileList(arr[0].files, fileList);
 }
@@ -111,8 +112,9 @@ function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): strin
  * @param words 
  * @returns 
  */
-function getAssignData(data: any[], words: string[], count = 0, arr: any[] = []) {
-  const len = words.length - 1;
+function getAssignData(data: any[], words: string[], count = 0, arr: any[] = []): any[] {
+  // const len = words.length - 1;
+  if (!data || !words) return arr;
   for (let i = 0; i < data.length; i++) {
     if (typeof data[i] === 'object' && data[i].link === words[count]) {
       arr[0] = deepCloneObj(data[i]);

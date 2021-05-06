@@ -22,9 +22,13 @@ export default defineConfig({
     port: 2000
   },
   routes: [
-    { path: '/', exact: true, component: '@/pages/index', title: '首页', state: { role: ['user'] } },
-    { component: '@/pages/note/_type' },
-    { component: '@/pages/404', title: '找不到页面' }
+    { exact: false, path: '/', component: '@/layouts/index',
+      routes: [
+        { path: '/', exact: true, component: '@/pages/index', title: '首页', state: { role: ['user'] } },
+        { component: '@/pages/note/_type' },
+        { component: '@/pages/404', title: '找不到页面' }
+      ]
+    }
   ],
   fastRefresh: {},
 });

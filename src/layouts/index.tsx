@@ -1,7 +1,12 @@
-export default ({ Component }: any) => {
+import { FC } from 'react';
+import Footer from './Footer/index';
+
+const Template: FC = ({ children }) => {
   return (<>
-    'hello'
-    <Component />
-    footer
+    hfdsufhusa
+    {children}
+    <Footer />
   </>)
 }
+
+export default Template;

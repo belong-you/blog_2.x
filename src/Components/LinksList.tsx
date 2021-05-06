@@ -12,7 +12,8 @@ const LinksList = ({ html }: IRouteProps) => {
   const arr = searchTitleList(html);
 
   return (<ul className={style.links_list}>{arr.map((val: any, index: number) => <li key={index} 
-    style={{textIndent: val.level.slice(1) - 1 + 'em', fontWeight: val.level === 'h1' ? 'bold' : 'inherit'}}
+    className={val.level === 'h1' ? style.title : ''}
+    style={{textIndent: val.level.slice(1) - 1 + 'em'}}
     onClick={() => jump(val.id)}
   >{
     val.text
