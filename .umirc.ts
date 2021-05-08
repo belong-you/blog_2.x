@@ -10,7 +10,8 @@ export default defineConfig({
     { rel: 'stylesheet', href: '/css/common.css' },
   ],
   publicPath: '/',
-  outputPath: '/ssr_deploy/dist',
+  outputPath: '/deploy/public',
+  dynamicImport: {},
   hash: true,
   targets: {
     ie: 11,

@@ -1,5 +1,6 @@
 .note_container{
-  min-height: calc(100vh - 160px);
+  // min-height: calc(100vh - 160px);
+  display: flex;
   li > a{
     display: inline-block;
     width: 100%;
@@ -18,57 +19,52 @@
     background: rgba(0,0,0,.2);
     border-radius: 3px;
   }
-
-  .folder_list, .links_list, .file_list{
-    position: fixed;
-    top: 0;
+  .folder_list, .links_list{
+    width: 200px;
+    > ul{
+      position: fixed;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
   .folder_list{
-    left: 0;
-  }
-  .links_list{
-    right: 0;
+    z-index: 1;
+    ul{
+      width: 200px;
+      padding-left: 10px;
+      box-sizing: border-box;
+    }
+    > ul{
+      background: #f7f7f7;
+    }
+    li{
+      padding-left: 10px;
+      line-height: 1.8;
+      box-sizing: border-box;
+      &:hover{
+        background: rgba(0,0,0,.04);
+      }
+    }
   }
   .wrapper{
-    width: calc(100vw - 420px);
+    flex: 1 1 auto;
+    .file_list{
+      > ul{
+        position: fixed;
+        width: 170px;
+      }
+    }
+    .content{
+      margin-left: 170px;
+    }
   }
-  .file_list, .content{
-    display: inline-block;
-    vertical-align: top;
-  }
-  .content{
-    padding-left: 180px;
-    width: 100%;
-  }
-  .file_list{
-    width: 174px;
-    max-height: calc(100vh - 120px);
-  }
+}
 
-  .links_list{
-    width: 200px;
-  }
-}
-.folder_list, .links_list, .file_list{
-  max-height: 100vh;
-  overflow-y: auto;
-}
-.folder_list{
-  width: 200px;
-  ul{
-    padding-left: 10px;
-  }
-  > ul{
-    background: #f7f7f7;
-  }
-  
-}
-.folder_list{
-  li{
-    padding-left: 10px;
-    line-height: 1.8;
-    &:hover{
-      background: rgba(0,0,0,.04);
+@media (max-width: 1366px) {
+  .note_container{
+    .folder_list{
+      position: fixed;
     }
   }
 }

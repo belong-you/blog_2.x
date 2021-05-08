@@ -33,12 +33,14 @@ const NotePage = ({ label, text, fileList }: IRouteProps) => {
       <NoteLabel list={label} />
     </div>
     
-    <div className={['leayer', style.wrapper].join(' ')}>
-      <div className={[style.file_list].join(' ')} >
-        <NoteFileList list={fileList} />
-      </div>
-      <div className={[style.content].join(' ')} >
-        <Markdown html={newHTML} />
+    <div className={style.wrapper}>
+      <div className={['leayer', style.wrap].join(' ')}>
+        <div className={[style.file_list].join(' ')} >
+          <NoteFileList list={fileList} />
+        </div>
+        <div className={[style.content].join(' ')} >
+          <Markdown html={newHTML} />
+        </div>
       </div>
     </div>
 
