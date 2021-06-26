@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules
+*.zip
+*.rar
 /npm-debug.log*
 /yarn-error.log
 /package-lock.json

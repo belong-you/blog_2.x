@@ -1,8 +1,9 @@
-.note_file_list{
-  li{
+.note_file_list {
+  li {
     line-height: 1.8;
+    padding-left: 10px;
   }
-  .active{
-    background: rgba(0, 119, 255, .2);
+  .active {
+    background: rgba(0, 119, 255, 0.2);
   }
 }

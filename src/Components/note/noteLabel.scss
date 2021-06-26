@@ -1,11 +1,13 @@
-.open{
+.open {
   text-align: right;
 }
-.note_label{
-  > li > ul{
-    display: none;
-  }
-  > li.active > ul{
-    display: block;
+.note_label {
+  > li {
+    > ul {
+      display: none;
+    }
+    &.active > ul {
+      display: block;
+    }
   }
 }

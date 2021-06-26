@@ -1,7 +1,6 @@
-.note_container{
-  // min-height: calc(100vh - 160px);
+.note_container {
   display: flex;
-  li > a{
+  li > a {
     display: inline-block;
     width: 100%;
     height: 100%;
@@ -10,61 +9,93 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  ::-webkit-scrollbar{
-    width: 6px;
-    height: 6px;
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
     background: #eee;
   }
-  ::-webkit-scrollbar-thumb{
-    background: rgba(0,0,0,.2);
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
   }
-  .folder_list, .links_list{
+  .folder_list,
+  .links_list {
     width: 200px;
-    > ul{
+    > ul {
       position: fixed;
+      width: 200px;
       max-height: calc(100vh - 100px);
       overflow-y: auto;
       overflow-x: hidden;
     }
   }
-  .folder_list{
+  .folder_list {
     z-index: 1;
-    ul{
-      width: 200px;
+    p {
+      padding-top: 10px;
+      padding-right: 10px;
+    }
+    ul {
       padding-left: 10px;
       box-sizing: border-box;
+      background: white;
     }
-    > ul{
-      background: #f7f7f7;
+    > ul {
+      border-radius: 0 8px 8px 0;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-    li{
+    li {
       padding-left: 10px;
       line-height: 1.8;
       box-sizing: border-box;
-      &:hover{
-        background: rgba(0,0,0,.04);
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
       }
     }
   }
-  .wrapper{
+  .links_list {
+    > ul {
+      border-radius: 8px 0 0 8px;
+      border-left: 1px solid #eee;
+    }
+  }
+  .file_list > ul {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+  .wrapper {
     flex: 1 1 auto;
-    .file_list{
-      > ul{
+    .file_list {
+      > ul {
         position: fixed;
         width: 170px;
       }
     }
-    .content{
+    .content {
       margin-left: 170px;
+      max-width: calc(100vw - 190px);
     }
   }
 }
 
 @media (max-width: 1366px) {
-  .note_container{
-    .folder_list{
+  .note_container {
+    .folder_list {
       position: fixed;
+      transform: translateX(-190px);
+      transition: transform 0.4s;
+    }
+  }
+}
+@media (max-width: 960px) {
+  .note_container {
+    .links_list {
+      position: fixed;
+      right: 0;
+      > ul {
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 }

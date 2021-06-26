@@ -3,60 +3,64 @@ import NoteLabel from '@/Components/note/NoteLabel';
 import NoteFileList from '@/Components/note/NoteFileList';
 import Markdown from '@/Components/Markdown';
 import MarkdownIt from 'markdown-it';
-const md = MarkdownIt();
 import LinksList from '@/Components/LinksList';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
 import style from './type.scss';
 import { IRouteProps } from 'umi';
 import { createNum } from '@/utils/number';
+const md = MarkdownIt();
 const iter = createNum();
-const { [ 'log' ] : c } = console;
+import routeMonitor from '@/Components/routerMonitor';
+const { ['log']: c } = console;
 
-const NotePage = ({ label, text, fileList }: IRouteProps) => {
-
+const NotePage = ({ label, text, fileList, history }: IRouteProps) => {
+  routeMonitor(history);
   const html = text ? md.render(text) : 'loading...';
 
   let newHTML = '';
-  const reg = /^\<h\d/g;
+
+  const reg = /^\<h\d/g; // 标题匹配
   html.split(/\n/).forEach((val: string) => {
     // h 标签添加 id
     if (reg.test(val)) {
       const strStart = val.slice(0, 3);
       val = val.replace(reg, `${strStart} id='${iter.next().value}'`);
     }
-    /\>$/.test(val) ? newHTML += val : newHTML += val + '\n';
-  })
+    /\>$/.test(val) ? (newHTML += val) : (newHTML += val + '\n');
+  });
 
-  return (<div className={style.note_container}>
-    <div className={[style.folder_list].join(' ')} >
-      <NoteLabel list={label} />
-    </div>
-    
-    <div className={style.wrapper}>
-      <div className={['leayer', style.wrap].join(' ')}>
-        <div className={[style.file_list].join(' ')} >
-          <NoteFileList list={fileList} />
-        </div>
-        <div className={[style.content].join(' ')} >
-          <Markdown html={newHTML} />
+  return (
+    <div className={style.note_container}>
+      <div className={[style.folder_list].join(' ')}>
+        <NoteLabel list={label} />
+      </div>
+
+      <div className={style.wrapper}>
+        <div className={['leayer', style.wrap].join(' ')}>
+          <div className={[style.file_list].join(' ')}>
+            <NoteFileList list={fileList} />
+          </div>
+          <div className={[style.content].join(' ')}>
+            <Markdown html={newHTML} />
+          </div>
         </div>
       </div>
-    </div>
 
-    <div className={style.links_list}>
-      <LinksList html={newHTML} />
+      <div className={style.links_list}>
+        <LinksList html={newHTML} />
+      </div>
     </div>
-  </div>);
-}
+  );
+};
 
 NotePage.getInitialProps = async ({ history }: IRouteProps) => {
   const pathArr = pathNameSplit(history.location.pathname.split('/note/')[1]);
 
   const label: any = await apiGetNoteLabel();
-  const arr = getAssignData(label.data, pathArr);  // 递归数组过滤
-  const fileList = getLastFileList(arr);  // 数组最后的文件列表
-  const url = getFilenameUrl(arr, pathArr);  // 指定文件路径
+  const arr = getAssignData(label.data, pathArr); // 递归数组过滤
+  const fileList = getLastFileList(arr); // 数组最后的文件列表
+  const url = getFilenameUrl(arr, pathArr); // 指定文件路径
   const file: any = await apiGetNoteFile(escape(url));
 
   let text: string = '';
@@ -67,27 +71,31 @@ NotePage.getInitialProps = async ({ history }: IRouteProps) => {
     label: label.data,
     fileList,
     text,
-  })
-
-}
+  });
+};
 export default NotePage;
-
 
 /**
  * 根据路由获取文件的路径
- * @param arr 
- * @returns 
+ * @param arr
+ * @returns
  */
-function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): string{
+function getFilenameUrl(
+  arr: any[],
+  pathArr: string[],
+  url: string = '',
+): string {
   if (!arr || !pathArr) return 'undefined';
   const value = arr[0];
   const str = pathArr[pathArr.length - 1] + ' ';
   if (typeof value === 'object') {
-    url += `${value.id} ${value.folder === value.link ? '' : value.folder + '_'}${value.link}/`;
-    return getFilenameUrl(value.files, pathArr, url);  // 递归
+    url += `${value.id} ${
+      value.folder === value.link ? '' : value.folder + '_'
+    }${value.link}/`;
+    return getFilenameUrl(value.files, pathArr, url); // 递归
   } else if (typeof value === 'string') {
-    if (!Number(str)) return url += arr[0];
-    for (let i = 0; i < arr.length; i ++) {
+    if (!Number(str)) return (url += arr[0]);
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i].startsWith(str)) {
         url += arr[i];
         break;
@@ -100,21 +108,26 @@ function getFilenameUrl (arr: any[], pathArr: string[], url: string = ''): strin
 /**
  * 获取最后的文件列表
  * @param arr 递归数组
- * @returns 
+ * @returns
  */
- function getLastFileList (arr: any[], fileList: string[] = []): any {
+function getLastFileList(arr: any[], fileList: string[] = []): any {
   if (arr.length === 0) return;
-  if (typeof arr[0] === 'string') return fileList = arr;
+  if (typeof arr[0] === 'string') return (fileList = arr);
   return getLastFileList(arr[0].files, fileList);
 }
 
 /**
  * 数组深度过滤（具有一定规则，可递归）
- * @param data 
- * @param words 
- * @returns 
+ * @param data
+ * @param words
+ * @returns
  */
-function getAssignData(data: any[], words: string[], count = 0, arr: any[] = []): any[] {
+function getAssignData(
+  data: any[],
+  words: string[],
+  count = 0,
+  arr: any[] = [],
+): any[] {
   // const len = words.length - 1;
   if (!data || !words) return arr;
   for (let i = 0; i < data.length; i++) {
@@ -128,4 +141,3 @@ function getAssignData(data: any[], words: string[], count = 0, arr: any[] = [])
   }
   return arr;
 }
-
