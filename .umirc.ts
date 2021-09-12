@@ -7,9 +7,13 @@ export default defineConfig({
     devServerRender: true,
   },
   links: [
+    { rel: 'icon', href: '/logo.ico' },
+    { rel: 'dns-prefetch', href: 'http://hpyyb.cn/' },
+    { rel: 'dns-prefetch', href: 'http://www.hpyyb.cn/' },
     { rel: 'stylesheet', href: '/css/reset.css' },
     { rel: 'stylesheet', href: '/css/common.css' },
   ],
+  base: '/blog',
   publicPath: '/',
   outputPath: '/deploy/public',
   dynamicImport: {},
@@ -21,7 +25,7 @@ export default defineConfig({
     type: 'none',
   },
   devServer: {
-    port: 20000,
+    port: 20000
   },
   routes: [
     {
@@ -32,16 +36,24 @@ export default defineConfig({
         {
           path: '/',
           exact: true,
-          component: '@/pages/index',
+          component: '@/pages/home/index',
           title: '首页',
           state: { role: ['user'] },
         },
         { component: '@/pages/note/_type' },
-        { component: '@/pages/404', title: '找不到页面' },
+        { component: '@/pages/notFound/index', title: '找不到页面' },
       ],
     },
   ],
-  chainWebpack(memo) {
+  chainWebpack(memo, { env, webpack, createCSSRule }) {
+    // 设置 alias
+    memo.resolve.alias.set('foo', '/tmp/a/b/foo');
+
+    // 删除 umi 内置插件
+    memo.plugins.delete('progress');
+    memo.plugins.delete('friendly-error');
+    memo.plugins.delete('copy');
+
     memo.plugin('CompressionPlugin').use(
       new CompressionPlugin({
         filename: '[path].gz[query]',
@@ -56,5 +68,7 @@ export default defineConfig({
       }),
     );
   },
+  // webpack5: {},
+  plugins: [],
   fastRefresh: {},
 });

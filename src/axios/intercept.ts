@@ -1,13 +1,10 @@
 import axios from 'axios';
+import env from '@/config';
 
 const config: any = {};
 
-if (process.env.NODE_ENV === 'development') {
-  config.baseURL = 'http://127.0.0.1:20010/api';
-} else {
-  config.baseURL = 'http://hpyyb.cn/api';
-}
-// config.baseURL = 'http://note.bozai.tech/api';
+config.baseURL = env.BASE_API
+
 // config.withCredentials = true;  // 跨域
 
 const instance = axios.create(config);

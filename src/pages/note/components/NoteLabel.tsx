@@ -13,7 +13,7 @@ const NoteLabel = ({ list, path = '', count = 0 }: any) => {
   count ++;  // 组件递归的深度
 
   // 控制列表展开收起
-  const [ open, setOpen ] = useState(true);
+  const [ open, setOpen ] = useState(false);
   useEffect(() => {
     if (count === 1) {
       const storage = localStorage.getItem('NOTE_LABEL_OPEN');
@@ -31,18 +31,23 @@ const NoteLabel = ({ list, path = '', count = 0 }: any) => {
   sleep(16).then(() => setFlag(true));
 
 
-  return (<ul className={count === 1 && open ? style.note_label : ''}>
-  {count === 1 ? <p className={style.open} onClick={labelOpen}>展开</p> : null}
-  {list && list.map((val: any, index: number) => typeof val === 'object' ? 
-    <li key={index} className={count === 1 && active === val.link ? style.active : ''} >
-      <NavLink to={'/note/' + (path && path) + val.link}>{val.folder}</NavLink>
+  return (<ul className={count === 1 && !open ? style.note_label : ''}>
+  {count === 1 ? <p className={style['icon-wrap']}>
+    <i className={['iconfont', style.icon, style.open].join(' ')} onClick={labelOpen}>&#xe60a;</i>
+    <i className={['iconfont', style.icon, style.unfold].join(' ')}>&#xe650;</i>
+  </p> : null}
+    <ul className={style.list}>
+      {list && list.map((val: any, index: number) => typeof val === 'object' ? 
+        <li key={index} className={count === 1 && active === val.link ? style.active : ''} >
+          <NavLink to={'/note/' + (path && path) + val.link}>{val.folder}</NavLink>
 
-      {/* 组件递归 */}
-      <NoteLabel list={val.files} path={path + val.link + '/'} count={count} />
-      {/* {flag ? <NoteLabel list={val.files} path={path + val.link + '/'} count={count} /> : null } */}
-    </li> 
-    : null)
-  }
+          {/* 组件递归 */}
+          <NoteLabel list={val.files} path={path + val.link + '/'} count={count} />
+          {/* {flag ? <NoteLabel list={val.files} path={path + val.link + '/'} count={count} /> : null } */}
+        </li> 
+        : null)
+      }
+    </ul>
   </ul>);
 }
 
