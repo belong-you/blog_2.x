@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Footer from './Footer/index';
 import Header from './Header/index';
+import '@/styles/index.scss';
 
 const Template: FC = ({ children }) => {
   return (
