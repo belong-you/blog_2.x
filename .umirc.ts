@@ -1,5 +1,6 @@
 import { defineConfig } from 'umi';
 import CompressionPlugin from 'compression-webpack-plugin';
+import routes from './.routes';
 
 export default defineConfig({
   ssr: {
@@ -25,24 +26,7 @@ export default defineConfig({
   devServer: {
     port: 20000
   },
-  routes: [
-    {
-      exact: false,
-      path: '/',
-      component: '@/layouts/index',
-      routes: [
-        {
-          path: '/',
-          exact: true,
-          component: '@/pages/home/index',
-          title: '首页',
-          state: { role: ['user'] },
-        },
-        { component: '@/pages/note/_type' },
-        { component: '@/pages/notFound/index', title: '找不到页面' },
-      ],
-    },
-  ],
+  routes,
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     // 设置 alias
     memo.resolve.alias.set('foo', '/tmp/a/b/foo');

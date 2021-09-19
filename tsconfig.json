@@ -23,7 +23,8 @@
     "src/**/*",
     "config/**/*",
     ".umirc.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    ".routes.ts"
   ],
   "exclude": [
     "node_modules",
