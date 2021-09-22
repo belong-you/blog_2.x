@@ -7,15 +7,14 @@ export default defineConfig({
     forceInitial: true,
     devServerRender: true,
   },
+  metas: [{ content: "on", httpEquiv: "x-dns-prefetch-control" }],
   links: [
-    { rel: 'icon', href: '/logo.ico' },
     { rel: 'dns-prefetch', href: 'http://hpyyb.cn/' },
     { rel: 'dns-prefetch', href: 'http://www.hpyyb.cn/' },
   ],
   base: '/',
   publicPath: '/',
-  outputPath: '/deploy/public',
-  dynamicImport: {},
+  outputPath: '/deploy/dist',
   hash: true,
   targets: {
     ie: 11,
@@ -29,12 +28,18 @@ export default defineConfig({
   routes,
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     // 设置 alias
-    memo.resolve.alias.set('foo', '/tmp/a/b/foo');
+    // memo.resolve.alias.set('foo', '/tmp/a/b/foo');
 
     // 删除 umi 内置插件
     memo.plugins.delete('progress');
     memo.plugins.delete('friendly-error');
-    memo.plugins.delete('copy');
+    memo.plugins.delete('plugin-antd');
+    memo.plugins.delete('plugin-analytics');
+    memo.plugins.delete('plugin-crossorigin');
+    memo.plugins.delete('plugin-initial-state');
+    memo.plugins.delete('plugin-model');
+    memo.plugins.delete('plugin-locale');
+    memo.plugins.delete('plugin-request');
 
     memo.plugin('CompressionPlugin').use(
       new CompressionPlugin({

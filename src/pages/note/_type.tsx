@@ -1,23 +1,21 @@
 import { apiGetNoteLabel, apiGetNoteFile } from '@/axios/note';
 import NoteLabel from './components/NoteLabel';
 import NoteFileList from './components/NoteFileList';
-import Markdown from '@/Components/Markdown/index';
+import Markdown from '@/components/Markdown/index';
 import MarkdownIt from 'markdown-it';
-import LinksList from '@/Components/LinksList/index';
+import LinksList from '@/components/LinksList/index';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
 import style from './type.scss';
 import { IRouteProps } from 'umi';
 import { createNum } from '@/utils/number';
 const md = MarkdownIt();
-const iter = createNum();
-import routeMonitor from '@/Components/routerMonitor';
 import { ctx_unfold } from './context';
 import { useState } from 'react';
 const { ['log']: c } = console;
 
 const NotePage = ({ label, text, fileList, history }: IRouteProps) => {
-  routeMonitor(history);
+  const iter = createNum();  // 数字生成器，提供id用
   const html = text ? md.render(text) : 'loading...';
 
   let newHTML = '';

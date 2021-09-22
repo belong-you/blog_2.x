@@ -1,8 +1,32 @@
 body, h1, h2, h3, h4, h5, h6, p{
   margin: 0;
 }
+html{
+  text-size-adjust: 100%;
+}
+body{
+  -webkit-font-smoothing: antialiased;
+}
 ul{
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+
+@media (max-width: 1024px) and (orientation:portrait) {
+  body{
+    font-family: Helvetica;
+  }
+
+  /* 移动端 a 标签点击时有默认阴影 */
+  a, input, button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  /* 对有些移动端按钮默认为圆角做恢复 */
+  input, button {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
 }

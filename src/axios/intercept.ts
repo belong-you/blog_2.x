@@ -1,5 +1,5 @@
 import axios from 'axios';
-import env from '@/config';
+import env from '@/env';
 
 const config: any = {};
 

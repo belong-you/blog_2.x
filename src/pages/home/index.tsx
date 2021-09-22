@@ -3,7 +3,7 @@ import { IRouteProps } from 'umi';
 import store from '@/redux/index';
 import { actions } from '@/redux/count';
 import { Provider } from 'react-redux';
-import Counter from '@/Components/Counter'
+import Counter from '@/components/Counter'
 
 
 function IndexPage(props: IRouteProps) {

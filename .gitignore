@@ -10,8 +10,8 @@ node_modules
 /yarn.lock
 
 # production
-/deploy/public/
-deploy.zip
+/deploy/dist/
+/deploy.zip
 
 # misc
 .DS_Store

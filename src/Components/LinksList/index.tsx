@@ -1,13 +1,30 @@
 import cheerio from 'cheerio';
-import { IRouteProps } from 'umi';
+import { IRouteProps, history } from 'umi';
 import PropTypes from 'prop-types';
-import { useLayoutEffect, useState } from 'react';
 import style from './linksList.scss';
 import { scrollTo } from '@/utils/browser';
+import { useEffect, useState } from 'react';
 const { ['log']: c } = console;
 
 const LinksList = ({ html }: IRouteProps) => {
   const arr = searchTitleList(html);
+
+  const [ hash, setHash ] = useState('0');  // 通过监控 hash 滚动到指定位置
+  useEffect(() => {
+    setHash(history.location.hash.slice(1) || '0');
+    roll2scrollY(hash);
+
+    // 监控 hash 变化
+    window.addEventListener('hashchange', () => {
+      roll2scrollY(history.location.hash.slice(1) || '0');
+    });
+    
+  }, [hash])
+
+  function jump(id: string) {
+    history.replace(`#${id}`);
+    setHash(id);
+  }
 
   return (
     <ul className={style.links_list}>
@@ -27,7 +44,8 @@ const LinksList = ({ html }: IRouteProps) => {
 
 export default LinksList;
 
-function jump(id: string) {
+// 查找id，滚动条跳转
+function roll2scrollY(id: string) {
   const top = document.getElementById(id)?.offsetTop || 0;
   scrollTo(top - 40);
 }
