@@ -1,4 +1,4 @@
-import { apiGetNoteLabel, apiGetNoteFile } from '@/axios/note';
+import { api_getNoteLabel, api_getNoteFile } from '@/axios/note';
 import NoteLabel from './components/NoteLabel';
 import NoteFileList from './components/NoteFileList';
 import Markdown from '@/components/Markdown/index';
@@ -62,13 +62,13 @@ NotePage.getInitialProps = async ({ history }: IRouteProps) => {
   const pathArr = pathNameSplit(history.location.pathname.split('/note/')[1]);
 
   if (!label) {
-    label = await apiGetNoteLabel();
+    label = await api_getNoteLabel();
   }
   // const label: any = await apiGetNoteLabel();
   const arr = getAssignData(label.data, pathArr); // 递归数组过滤
   const fileList = getLastFileList(arr); // 数组最后的文件列表
   const url = getFilenameUrl(arr, pathArr); // 指定文件路径
-  const file: any = await apiGetNoteFile(escape(url));
+  const file: any = await api_getNoteFile(escape(url));
 
   let text: string = '';
   if (file.code == 200) text = file.data;

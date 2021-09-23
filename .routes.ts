@@ -1,7 +1,9 @@
+import env from './env_variable';
+
 export default [
   {
     exact: false,
-    path: '/',
+    path: env.BASE_ROUTE_URL,
     component: '@/layouts/index',
     routes: [
       {

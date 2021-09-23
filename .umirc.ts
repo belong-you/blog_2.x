@@ -1,6 +1,8 @@
 import { defineConfig } from 'umi';
 import CompressionPlugin from 'compression-webpack-plugin';
 import routes from './.routes';
+import env from './env_variable';
+import path from 'path';
 
 export default defineConfig({
   ssr: {
@@ -12,9 +14,12 @@ export default defineConfig({
     { rel: 'dns-prefetch', href: 'http://hpyyb.cn/' },
     { rel: 'dns-prefetch', href: 'http://www.hpyyb.cn/' },
   ],
-  base: '/',
+  base: env.BASE_ROUTE_URL,
   publicPath: '/',
   outputPath: '/deploy/dist',
+  alias: {
+    '~': path.resolve(__dirname)
+  },
   hash: true,
   targets: {
     ie: 11,
