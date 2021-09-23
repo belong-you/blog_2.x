@@ -1,7 +1,7 @@
 import styles from './index.scss';
 import { IRouteProps } from 'umi';
-import store from '@/redux/index';
-import { actions } from '@/redux/count';
+import store from '@/store/index';
+import { actions } from '@/store/count';
 import { Provider } from 'react-redux';
 import Counter from '@/components/Counter'
 

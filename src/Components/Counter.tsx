@@ -1,4 +1,4 @@
-import { actions } from "@/redux/count";
+import { actions } from "@/store/count";
 import { connect } from "react-redux";
 import { IRouteProps } from "umi";
 
