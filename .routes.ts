@@ -24,6 +24,12 @@ export default [
         component: '@/pages/note/_type'
       },
       {
+        chat: '/chat',
+        exact: true,
+        component: '@/pages/chat/index',
+        title: '聊天室',
+      },
+      {
         component: '@/pages/notFound/index',
         title: '找不到页面'
       },

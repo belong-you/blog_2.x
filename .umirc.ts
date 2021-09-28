@@ -9,6 +9,7 @@ export default defineConfig({
     forceInitial: true,
     devServerRender: true,
   },
+  request: false,
   metas: [{ content: "on", httpEquiv: "x-dns-prefetch-control" }],
   links: [
     { rel: 'dns-prefetch', href: 'http://hpyyb.cn/' },
@@ -28,7 +29,7 @@ export default defineConfig({
     type: 'none',
   },
   devServer: {
-    port: 20000
+    port: 3000
   },
   routes,
   chainWebpack(memo, { env, webpack, createCSSRule }) {

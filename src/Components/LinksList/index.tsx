@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import { IRouteProps, history } from 'umi';
 import PropTypes from 'prop-types';
-import style from './linksList.scss';
+import style from './module.scss';
 import { scrollTo } from '@/utils/browser';
 import { useEffect, useState } from 'react';
 const { ['log']: c } = console;

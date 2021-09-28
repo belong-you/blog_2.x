@@ -4,8 +4,9 @@
   width: 100vw;
   height: 40px;
   line-height: 40px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: saturate(180%) blur(8px);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: saturate(100%) blur(4px);
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
   z-index: 999;
   a {
     color: #404040;

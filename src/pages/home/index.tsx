@@ -1,9 +1,9 @@
-import styles from './index.scss';
 import { IRouteProps } from 'umi';
 import store from '@/store/index';
 import { actions } from '@/store/count';
 import { Provider } from 'react-redux';
 import Counter from '@/components/Counter'
+import styles from './module.scss';
 
 
 function IndexPage(props: IRouteProps) {

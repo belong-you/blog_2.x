@@ -1,5 +1,5 @@
 import { useRef, useEffect, ElementRef, useState } from 'react';
-import style from './markdown.scss';
+import style from './module.scss';
 import hljs from 'highlight.js';
 import PropTypes from 'prop-types';
 import 'highlight.js/scss/github.scss';

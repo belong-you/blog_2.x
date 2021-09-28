@@ -1,4 +1,4 @@
-import { api_getNoteLabel, api_getNoteFile } from '@/axios/note';
+import { api_getNoteLabel, api_getNoteFile } from '@/api/note';
 import NoteLabel from './components/NoteLabel';
 import NoteFileList from './components/NoteFileList';
 import Markdown from '@/components/Markdown/index';
@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 import LinksList from '@/components/LinksList/index';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
-import style from './type.scss';
+import style from './module.scss';
 import { IRouteProps } from 'umi';
 import { createNum } from '@/utils/number';
 const md = MarkdownIt();
