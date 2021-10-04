@@ -80,7 +80,7 @@ const NotePage = ({ label, text, fileList }: IRouteProps) => {
 
       <ul className={style.bottom_menu}>
         <li className="iconfont" onClick={displayLabel}>&#xe638;</li>
-        <li className="iconfont" onClick={displayFile}>&#xe6c9;</li>
+        <li className="iconfont" onClick={displayFile}>&#xe60b;</li>
         <li className="iconfont" onClick={displayLink}>&#xe623;</li>
       </ul>
     </div>
