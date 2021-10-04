@@ -1,6 +1,6 @@
 
 .note_label {
-  .list{
+  > .list{
     max-height: calc(100vh - 400px);
     overflow-y: auto;
     > li {
@@ -25,5 +25,13 @@
   }
   .open{
     margin: 0 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .note_label{
+    > .list{
+      max-height: calc(100vh - 200px);
+    }
   }
 }

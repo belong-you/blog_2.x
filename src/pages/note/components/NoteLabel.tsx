@@ -1,11 +1,11 @@
-import { NavLink, useHistory } from 'umi';
+import { IRouteProps, NavLink, useHistory } from 'umi';
 import { sleep } from '@/utils/browser';
 import { pathNameSplit } from '@/utils/browser';
 import { useEffect, useState } from 'react';
 import style from './noteLabel.scss';
 const { ['log'] : c } = console;
 
-const NoteLabel = ({ list, path = '', count = 0 }: any) => {
+const NoteLabel = ({ list, path = '', count = 0 }: IRouteProps) => {
   let url = useHistory().location.pathname.split('/note/')[1];
   const filePaths = pathNameSplit(url);
   let active = '';  // 要展开的部分

@@ -7,21 +7,46 @@ import LinksList from '@/components/LinksList/index';
 import { pathNameSplit } from '@/utils/browser';
 import { deepCloneObj } from '@/utils/object';
 import style from './module.scss';
-import { IRouteProps } from 'umi';
+import { IRouteProps, useHistory } from 'umi';
 import { createNum } from '@/utils/number';
 const md = MarkdownIt();
 import { ctx_unfold } from './context';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const { ['log']: c } = console;
 
-const NotePage = ({ label, text, fileList, history }: IRouteProps) => {
+const NotePage = ({ label, text, fileList }: IRouteProps) => {
   const iter = createNum();  // 数字生成器，提供id用
   const html = text ? md.render(text) : 'loading...';
 
   let newHTML = '';
 
-  const [ unfold, setUnfold ] = useState(ctx_unfold);
+  // 控制菜单显示与隐藏（移动端）
+  const [ showLabelList, setShowLabelList ] = useState(false);
+  const [ showFileList, setShowFileList ] = useState(false);
+  const [ showLinkList, setShowLinkList ] = useState(false);
 
+
+  useEffect(() => {
+    return;
+  }, [showLabelList, showFileList, showLinkList])
+  
+  function displayLabel() {
+    setShowLabelList(!showLabelList);
+    setShowFileList(false);
+    setShowLinkList(false);
+  }
+  function displayFile() {
+    setShowFileList(!showFileList);
+    setShowLabelList(false);
+    setShowLinkList(false);
+  }
+  function displayLink() {
+    setShowLinkList(!showLinkList);
+    setShowLabelList(false);
+    setShowFileList(false);
+  }
+  
+  
   const titleReg = /^\<h\d/g; // 标题匹配
   html.split(/\n/).forEach((val: string) => {
     // h 标签添加 id
@@ -34,13 +59,13 @@ const NotePage = ({ label, text, fileList, history }: IRouteProps) => {
 
   return (
     <div className={style.note_container}>
-      <div className={[style.folder_list].join(' ')}>
+      <div className={[style.folder_list, showLabelList ? style.open : ''].join(' ')}  onClick={() => void setShowLabelList(false)}>
         <NoteLabel list={label} />
       </div>
 
       <div className={style.wrapper}>
         <div className={['leayer', style.wrap].join(' ')}>
-          <div className={[style.file_list].join(' ')}>
+          <div className={[style.file_list, showFileList ? style.open : ''].join(' ')} onClick={() => void setShowFileList(false)}>
             <NoteFileList list={fileList} />
           </div>
           <div className={[style.content].join(' ')}>
@@ -49,9 +74,15 @@ const NotePage = ({ label, text, fileList, history }: IRouteProps) => {
         </div>
       </div>
 
-      <div className={style.links_list}>
+      <div className={[style.links_list, showLinkList ? style.open : ''].join(' ')} onClick={() => void setShowLinkList(false)}>
         <LinksList html={newHTML} />
       </div>
+
+      <ul className={style.bottom_menu}>
+        <li className="iconfont" onClick={displayLabel}>&#xe638;</li>
+        <li className="iconfont" onClick={displayFile}>&#xe6c9;</li>
+        <li className="iconfont" onClick={displayLink}>&#xe623;</li>
+      </ul>
     </div>
   );
 };

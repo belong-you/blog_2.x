@@ -1,9 +1,9 @@
-import { NavLink, useHistory } from 'umi';
+import { IRouteProps, NavLink, useHistory } from 'umi';
 import { pathNameSplit } from '@/utils/browser';
 import style from './noteFileList.scss';
 const { ['log'] : c } = console;
 
-const NoteFileList = ({ list}: any) => {
+const NoteFileList = ({ list }: IRouteProps) => {
   let path = useHistory().location.pathname;
   const filePaths = pathNameSplit(path);
   const len = filePaths.length - 1;
@@ -11,7 +11,7 @@ const NoteFileList = ({ list}: any) => {
   if (!Number(active)) {
     active = list && list[0].match(/(\d|\.)+/)[0];
   }
-  
+
   Number(filePaths[len]) && (path = path.split('/' + filePaths[len])[0]);
   
   return (<ul className={style.note_file_list}>{
