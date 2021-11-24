@@ -7,7 +7,7 @@ const Header: FC = () => {
   return (
     <header className={style.header}>
       <div className={style.wrapper}>
-        <Link to='/home'>Home</Link>
+        <Link to='/'>Home</Link>
         <Link to='/note'>Note</Link>
         <Link to='/chat'>Chat</Link>
         <a href="https://github.com/belong-you">GitHub</a>

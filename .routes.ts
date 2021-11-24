@@ -8,10 +8,6 @@ export default [
     routes: [
       {
         path: '/',
-        redirect: '/home'
-      },
-      {
-        path: '/home',
         exact: true,
         component: '@/pages/home/index',
         title: '首页',
